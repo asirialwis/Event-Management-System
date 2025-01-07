@@ -13,5 +13,7 @@ namespace Event_Management_System_Backend.Interfaces
         Task<EventDetailDto> GetEventByIdAsync(int id);
 
         Task<string> AddAttendeeAsync(int eventId, AttendeeDto attendeeDto);
+
+        Task<string> UpdateEventDetailsAsync(int eventId, EventUpdateDto eventUpdateDto);
     }
 }

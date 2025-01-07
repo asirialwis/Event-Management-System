@@ -120,6 +120,51 @@ namespace Event_Management_System_Backend.Services
         }
 
 
+        public async Task<String> UpdateEventDetailsAsync(int id, EventUpdateDto eventUpdateDto)
+        {
+            var existingEvent = await _context.Events
+                .FirstOrDefaultAsync(e => e.Id == id);
+
+            if (existingEvent == null)
+            {
+                return "Event not found!";
+            }
+
+            // Update event details
+            existingEvent.Name = eventUpdateDto.Name;
+            if (eventUpdateDto.Name != null)
+                existingEvent.Name = eventUpdateDto.Name;
+
+            if (eventUpdateDto.Description != null)
+                existingEvent.Description = eventUpdateDto.Description;
+
+            if (eventUpdateDto.Date != null)
+                existingEvent.Date = eventUpdateDto.Date.Value;
+
+            if (eventUpdateDto.Location != null)
+                existingEvent.Location = eventUpdateDto.Location;
+
+            if (eventUpdateDto.CreatedBy != null)
+                existingEvent.CreatedBy = eventUpdateDto.CreatedBy;
+
+            if (eventUpdateDto.Capacity != null)
+                existingEvent.Capacity = eventUpdateDto.Capacity.Value;
+
+            if (eventUpdateDto.RemainingCapacity != null)
+                existingEvent.RemainingCapacity = eventUpdateDto.RemainingCapacity.Value;
+
+            if (eventUpdateDto.Tags != null)
+                existingEvent.Tags = eventUpdateDto.Tags;
+
+            // Save changes
+            await _context.SaveChangesAsync();
+
+            return "Event updated successfully!";
+        }
+
+
+
+
 
 
 

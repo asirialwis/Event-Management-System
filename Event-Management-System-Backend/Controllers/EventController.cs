@@ -78,5 +78,19 @@ namespace Event_Management_System_Backend.Controllers
 
             return Ok("Attendee added successfully.");
         }
+
+        [HttpPut("update-event/{id}")]
+        public async Task<IActionResult> UpdateEvent(int id, [FromBody] EventUpdateDto eventUpdateDto)
+        {
+            var result = await _eventService.UpdateEventDetailsAsync(id, eventUpdateDto);
+
+            if (result == "Event updated successfully!")
+            {
+                return Ok(result);
+            }
+
+            return NotFound(result);
+        }
+
     }
 }
