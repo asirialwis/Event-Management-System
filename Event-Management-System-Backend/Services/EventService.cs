@@ -135,6 +135,29 @@ namespace Event_Management_System_Backend.Services
         }
 
 
+        public async Task<string> DeleteEventAsync(int eventId)
+        {
+            // Find the event including its attendees
+            var existingEvent = await _context.Events
+                .Include(e => e.Attendees)
+                .FirstOrDefaultAsync(e => e.Id == eventId);
+
+            if (existingEvent == null)
+            {
+                return "Event not found!";
+            }
+
+            // Remove attendees
+            _context.Attendees.RemoveRange(existingEvent.Attendees);
+
+            // Remove the event
+            _context.Events.Remove(existingEvent);
+
+            // Save changes
+            await _context.SaveChangesAsync();
+
+            return "Event and associated attendees deleted successfully!";
+        }
 
 
 

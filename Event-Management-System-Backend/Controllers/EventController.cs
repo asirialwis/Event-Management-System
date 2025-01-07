@@ -65,8 +65,6 @@ namespace Event_Management_System_Backend.Controllers
 
 
 
-       
-
         [HttpPut("update-event/{id}")]
         public async Task<IActionResult> UpdateEvent(int id, [FromBody] EventUpdateDto eventUpdateDto)
         {
@@ -79,6 +77,24 @@ namespace Event_Management_System_Backend.Controllers
 
             return NotFound(result);
         }
+
+
+        [HttpDelete("{eventId}")]
+        public async Task<IActionResult> DeleteEvent(int eventId)
+        {
+            var result = await _eventService.DeleteEventAsync(eventId);
+
+            if (result == "Event not found!")
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
+        }
+
+
+
+
 
     }
 }
