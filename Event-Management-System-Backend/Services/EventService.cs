@@ -66,6 +66,7 @@ namespace Event_Management_System_Backend.Services
         public async Task<IEnumerable<EventDetailDto>> GetAllEventsAsync()
         {
             return await _context.Events
+                                 .Include(e => e.Attendees)
                                  .Select(e => new EventDetailDto
                                  {
                                      Id = e.Id,
@@ -76,7 +77,13 @@ namespace Event_Management_System_Backend.Services
                                      CreatedBy = e.CreatedBy, 
                                      Capacity = e.Capacity,  
                                      RemainingCapacity = e.RemainingCapacity, 
-                                     Tags = e.Tags 
+                                     Tags = e.Tags ,
+
+                                     Attendees = e.Attendees.Select(a=>new AttendeeDto
+                                     {
+                                         Name = a.Name,
+                                         Email = a.Email,
+                                     }).ToList()
                                  })
                                  .ToListAsync();
         }

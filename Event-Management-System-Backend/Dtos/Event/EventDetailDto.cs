@@ -1,4 +1,6 @@
-﻿namespace Event_Management_System_Backend.Dtos.Event
+﻿using Event_Management_System_Backend.Dtos.Attendee;
+
+namespace Event_Management_System_Backend.Dtos.Event
 {
     public class EventDetailDto
     {
@@ -11,5 +13,6 @@
         public int Capacity { get; set; }
         public int RemainingCapacity { get; set; }
         public string Tags { get; set; }
+        public IEnumerable<AttendeeDto> Attendees { get; internal set; }
     }
 }
