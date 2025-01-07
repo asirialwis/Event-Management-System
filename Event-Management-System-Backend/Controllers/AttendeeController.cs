@@ -54,5 +54,20 @@ namespace Event_Management_System_Backend.Controllers
         }
 
 
+        //delete assigned attendee
+        [HttpDelete("{eventId}/attendees/{attendeeId}")]
+        public async Task<IActionResult> DeleteAttendee(int eventId, int attendeeId)
+        {
+            var result = await _attendeeService.DeleteAttendeeAsync(eventId, attendeeId);
+
+            if (result == "Event not found!" || result == "Attendee not found!")
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
+        }
+
+
     }
 }

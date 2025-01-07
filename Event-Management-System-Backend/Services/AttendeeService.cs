@@ -48,8 +48,6 @@ namespace Event_Management_System_Backend.Services
         }
 
 
-
-
         public async Task<string> UpdateAttendeeAsync(int eventId, int attendeeId, UpdateAttendeeDto attendeeDto)
         {
             // Find the event including its attendees
@@ -86,6 +84,32 @@ namespace Event_Management_System_Backend.Services
             await _context.SaveChangesAsync();
 
             return "Attendee updated successfully!";
+        }
+
+
+
+        public async Task<string> DeleteAttendeeAsync(int eventId, int attendeeId)
+        {
+            var existingEvent = await _context.Events
+                .Include(e => e.Attendees)
+                .FirstOrDefaultAsync(e => e.Id == eventId);
+
+            if (existingEvent == null)
+            {
+                return "Event not found!";
+            }
+
+            var attendee = existingEvent.Attendees.FirstOrDefault(a => a.Id == attendeeId);
+
+            if (attendee == null)
+            {
+                return "Attendee not found!";
+            }
+
+            _context.Attendees.Remove(attendee);
+            await _context.SaveChangesAsync();
+
+            return "Attendee deleted successfully!";
         }
 
 
