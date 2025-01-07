@@ -89,35 +89,7 @@ namespace Event_Management_System_Backend.Services
         }
 
 
-        public async Task<string> AddAttendeeAsync(int eventId, AddAttendeeDto addAttendeeDto)
-        {
-            var eventEntity = await _context.Events
-                .FirstOrDefaultAsync(e => e.Id == eventId);
-
-            if (eventEntity == null)
-            {
-                return "Event not found.";
-            }
-
-            if (eventEntity.RemainingCapacity <= 0)
-            {
-                return "No remaining capacity for this event.";
-            }
-
-            var attendee = new Attendee
-            {
-                Name = addAttendeeDto.Name,
-                Email = addAttendeeDto.Email
-            };
-
-            eventEntity.Attendees.Add(attendee);
-            eventEntity.RemainingCapacity -= 1;
-
-            _context.Attendees.Add(attendee);
-            await _context.SaveChangesAsync();
-
-            return "Attendee added successfully.";
-        }
+       
 
 
         public async Task<String> UpdateEventDetailsAsync(int id, EventUpdateDto eventUpdateDto)

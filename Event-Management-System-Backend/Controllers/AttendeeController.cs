@@ -1,5 +1,6 @@
 ﻿using Event_Management_System_Backend.Dtos.Attendee;
 using Event_Management_System_Backend.Interfaces;
+using Event_Management_System_Backend.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Event_Management_System_Backend.Controllers
@@ -19,6 +20,21 @@ namespace Event_Management_System_Backend.Controllers
         }
 
 
+        // Add an attendee for specific evend
+        [HttpPost("add-attendee/{eventId}")]
+        public async Task<IActionResult> AddAttendee(int eventId, [FromBody] AddAttendeeDto addAttendeeDto)
+        {
+            if (addAttendeeDto == null)
+                return BadRequest("Attendee data is required.");
+
+            var result = await _attendeeService.AddAttendeeAsync(eventId, addAttendeeDto);
+
+
+
+            return Ok("Attendee added successfully.");
+        }
+
+        //update assigned attendee data
         [HttpPut("{eventId}/update/{attendeeId}")]
         public async Task<IActionResult> UpdateAttendee(int eventId, int attendeeId, [FromBody] UpdateAttendeeDto attendeeDto)
         {
