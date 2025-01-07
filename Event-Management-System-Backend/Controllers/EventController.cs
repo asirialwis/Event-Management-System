@@ -1,4 +1,5 @@
 ﻿using Event_Management_System_Backend.Data;
+using Event_Management_System_Backend.Dtos.Attendee;
 using Event_Management_System_Backend.Dtos.Event;
 using Event_Management_System_Backend.Interfaces;
 using Event_Management_System_Backend.Models;
@@ -60,6 +61,22 @@ namespace Event_Management_System_Backend.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving events");
             }
+        }
+
+
+
+        // POST: api/event/{eventId}/attendee
+        [HttpPost("{eventId}/attendee")]
+        public async Task<IActionResult> AddAttendee(int eventId, [FromBody] AttendeeDto attendeeDto)
+        {
+            if (attendeeDto == null)
+                return BadRequest("Attendee data is required.");
+
+            var result = await _eventService.AddAttendeeAsync(eventId, attendeeDto);
+
+            
+
+            return Ok("Attendee added successfully.");
         }
     }
 }

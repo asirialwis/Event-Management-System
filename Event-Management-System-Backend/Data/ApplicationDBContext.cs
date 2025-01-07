@@ -14,18 +14,18 @@
         public DbSet<Event> Events { get; set; }
         public DbSet<Attendee> Attendees { get; set; }
 
-        // Optional: Configure entity relationships and constraints using Fluent API
+        // Configure entity relationships and constraints using Fluent API
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Example: Configure a many-to-many relationship between Events and Attendees
+            //Configure a many-to-many relationship between Events and Attendees
             modelBuilder.Entity<Event>()
                 .HasMany(e => e.Attendees)
                 .WithMany(a => a.RegisteredEvents)
                 .UsingEntity(j => j.ToTable("EventAttendees")); // Join table
 
-            // Additional configurations (if any) can be added here
+            
         }
         
     }

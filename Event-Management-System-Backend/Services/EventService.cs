@@ -1,4 +1,5 @@
 ﻿using Event_Management_System_Backend.Data;
+using Event_Management_System_Backend.Dtos.Attendee;
 using Event_Management_System_Backend.Dtos.Event;
 using Event_Management_System_Backend.Interfaces;
 using Event_Management_System_Backend.Models;
@@ -78,6 +79,37 @@ namespace Event_Management_System_Backend.Services
                                      Tags = e.Tags 
                                  })
                                  .ToListAsync();
+        }
+
+
+        public async Task<string> AddAttendeeAsync(int eventId, AttendeeDto attendeeDto)
+        {
+            var eventEntity = await _context.Events
+                .FirstOrDefaultAsync(e => e.Id == eventId);
+
+            if (eventEntity == null)
+            {
+                return "Event not found.";
+            }
+
+            if (eventEntity.RemainingCapacity <= 0)
+            {
+                return "No remaining capacity for this event.";
+            }
+
+            var attendee = new Attendee
+            {
+                Name = attendeeDto.Name,
+                Email = attendeeDto.Email
+            };
+
+            eventEntity.Attendees.Add(attendee);
+            eventEntity.RemainingCapacity -= 1;
+
+            _context.Attendees.Add(attendee);
+            await _context.SaveChangesAsync();
+
+            return "Attendee added successfully.";
         }
 
 

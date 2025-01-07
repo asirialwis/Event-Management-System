@@ -1,4 +1,5 @@
-﻿using Event_Management_System_Backend.Dtos.Event;
+﻿using Event_Management_System_Backend.Dtos.Attendee;
+using Event_Management_System_Backend.Dtos.Event;
 using Event_Management_System_Backend.Models;
 
 namespace Event_Management_System_Backend.Interfaces
@@ -10,5 +11,7 @@ namespace Event_Management_System_Backend.Interfaces
         Task<IEnumerable<EventDetailDto>> GetAllEventsAsync();
 
         Task<EventDetailDto> GetEventByIdAsync(int id);
+
+        Task<string> AddAttendeeAsync(int eventId, AttendeeDto attendeeDto);
     }
 }
