@@ -20,6 +20,7 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 
 
 builder.Services.AddScoped<IEventService,EventService > ();
+builder.Services.AddScoped<IAttendeeService,AttendeeService> ();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

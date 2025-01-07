@@ -80,7 +80,7 @@ namespace Event_Management_System_Backend.Services
                                      Tags = e.Tags ,
 
                                      Attendees = e.Attendees.Select(a=>new AttendeeDto
-                                     {
+                                     {   Id = a.Id,
                                          Name = a.Name,
                                          Email = a.Email,
                                      }).ToList()
@@ -89,7 +89,7 @@ namespace Event_Management_System_Backend.Services
         }
 
 
-        public async Task<string> AddAttendeeAsync(int eventId, AttendeeDto attendeeDto)
+        public async Task<string> AddAttendeeAsync(int eventId, AddAttendeeDto addAttendeeDto)
         {
             var eventEntity = await _context.Events
                 .FirstOrDefaultAsync(e => e.Id == eventId);
@@ -106,8 +106,8 @@ namespace Event_Management_System_Backend.Services
 
             var attendee = new Attendee
             {
-                Name = attendeeDto.Name,
-                Email = attendeeDto.Email
+                Name = addAttendeeDto.Name,
+                Email = addAttendeeDto.Email
             };
 
             eventEntity.Attendees.Add(attendee);
@@ -161,6 +161,8 @@ namespace Event_Management_System_Backend.Services
 
             return "Event updated successfully!";
         }
+
+
 
 
 

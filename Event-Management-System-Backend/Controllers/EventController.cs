@@ -67,12 +67,12 @@ namespace Event_Management_System_Backend.Controllers
 
         // POST: api/event/{eventId}/attendee
         [HttpPost("{eventId}/attendee")]
-        public async Task<IActionResult> AddAttendee(int eventId, [FromBody] AttendeeDto attendeeDto)
+        public async Task<IActionResult> AddAttendee(int eventId, [FromBody] AddAttendeeDto addAttendeeDto)
         {
-            if (attendeeDto == null)
+            if (addAttendeeDto == null)
                 return BadRequest("Attendee data is required.");
 
-            var result = await _eventService.AddAttendeeAsync(eventId, attendeeDto);
+            var result = await _eventService.AddAttendeeAsync(eventId, addAttendeeDto);
 
             
 
