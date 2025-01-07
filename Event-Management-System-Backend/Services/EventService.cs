@@ -2,6 +2,7 @@
 using Event_Management_System_Backend.Dtos.Event;
 using Event_Management_System_Backend.Interfaces;
 using Event_Management_System_Backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Event_Management_System_Backend.Services
 {
@@ -59,5 +60,29 @@ namespace Event_Management_System_Backend.Services
             };
 
         }
+
+
+        public async Task<IEnumerable<EventDetailDto>> GetAllEventsAsync()
+        {
+            return await _context.Events
+                                 .Select(e => new EventDetailDto
+                                 {
+                                     Id = e.Id,
+                                     Name = e.Name,
+                                     Description = e.Description,
+                                     Date = e.Date,
+                                     Location = e.Location,
+                                     CreatedBy = e.CreatedBy, 
+                                     Capacity = e.Capacity,  
+                                     RemainingCapacity = e.RemainingCapacity, 
+                                     Tags = e.Tags 
+                                 })
+                                 .ToListAsync();
+        }
+
+
+
+
+
     }
 }

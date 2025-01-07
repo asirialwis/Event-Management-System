@@ -45,5 +45,21 @@ namespace Event_Management_System_Backend.Controllers
 
             return Ok(eventDetail);
         }
+
+
+        // GET: api/event/getall
+        [HttpGet("getall")]
+        public async Task<ActionResult<IEnumerable<EventDetailDto>>> GetAllEvents()
+        {
+            try
+            {
+                var events = await _eventService.GetAllEventsAsync();
+                return Ok(events);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving events");
+            }
+        }
     }
 }

@@ -6,6 +6,9 @@ namespace Event_Management_System_Backend.Interfaces
     public interface IEventService
     {
         Task<Event> CreateEventAsync(EventDto eventDto);
+
+        Task<IEnumerable<EventDetailDto>> GetAllEventsAsync();
+
         Task<EventDetailDto> GetEventByIdAsync(int id);
     }
 }
