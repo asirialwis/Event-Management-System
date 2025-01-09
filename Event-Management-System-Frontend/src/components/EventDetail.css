@@ -1,0 +1,120 @@
+.event-detail {
+    --primary-color: #4CAF50;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+}
+
+.event-detail h1, .event-detail h2 {
+    color: var(--primary-color);
+    text-align: center;
+}
+
+.event-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    list-style-type: none;
+    padding: 0;
+}
+
+.event-list li {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    flex: 1 1 calc(33.333% - 30px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.event-list li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.event-info p, .event-info h3 {
+    margin: 10px 0;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input-container input[type="text"],
+.input-container input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin: 3px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.event-detail button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.event-detail button:hover {
+    background-color: #45a049;
+}
+
+@media (max-width: 768px) {
+    .event-list li {
+        flex: 1 1 calc(50% - 30px);
+    }
+}
+
+@media (max-width: 480px) {
+    .event-list li {
+        flex: 1 1 100%;
+    }
+
+    .event-info input[type="text"],
+    .event-info input[type="email"] {
+        width: 100%;
+    }
+}
