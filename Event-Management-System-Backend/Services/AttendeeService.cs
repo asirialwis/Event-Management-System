@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Event_Management_System_Backend.Services
 {
-    public class AttendeeService:IAttendeeService
+    public class AttendeeService : IAttendeeService
     {
         private readonly ApplicationDBContext _context;
 
@@ -16,10 +16,10 @@ namespace Event_Management_System_Backend.Services
         }
 
 
-
         public async Task<string> AddAttendeeAsync(int eventId, AddAttendeeDto addAttendeeDto)
         {
             var eventEntity = await _context.Events
+                .Include(e => e.Attendees) // Ensure attendees are loaded
                 .FirstOrDefaultAsync(e => e.Id == eventId);
 
             if (eventEntity == null)
@@ -32,21 +32,38 @@ namespace Event_Management_System_Backend.Services
                 return "No remaining capacity for this event.";
             }
 
-            var attendee = new Attendee
-            {
-                Name = addAttendeeDto.Name,
-                Email = addAttendeeDto.Email
-            };
+            // Check if the attendee already exists based on Email
+            var existingAttendee = await _context.Attendees
+                .FirstOrDefaultAsync(a => a.Email == addAttendeeDto.Email);
 
-            eventEntity.Attendees.Add(attendee);
+            if (existingAttendee == null)
+            {
+                // If attendee doesn't exist, create a new one
+                existingAttendee = new Attendee
+                {
+                    Name = addAttendeeDto.Name,
+                    Email = addAttendeeDto.Email
+                };
+
+                _context.Attendees.Add(existingAttendee);
+            }
+            else
+            {
+                // Check if the attendee is already added to this event
+                if (eventEntity.Attendees.Any(a => a.Email == existingAttendee.Email))
+                {
+                    throw new InvalidOperationException("Attendee is already registered for this event.");
+                }
+            }
+
+            // Add the attendee to the event's Attendees list
+            eventEntity.Attendees.Add(existingAttendee);
             eventEntity.RemainingCapacity -= 1;
 
-            _context.Attendees.Add(attendee);
             await _context.SaveChangesAsync();
 
             return "Attendee added successfully.";
         }
-
 
         public async Task<string> UpdateAttendeeAsync(int eventId, int attendeeId, UpdateAttendeeDto attendeeDto)
         {
@@ -75,10 +92,7 @@ namespace Event_Management_System_Backend.Services
                 existingAttendee.Name = attendeeDto.Name;
             }
 
-            if (!string.IsNullOrEmpty(attendeeDto.Email))
-            {
-                existingAttendee.Email = attendeeDto.Email;
-            }
+
 
             // Save changes
             await _context.SaveChangesAsync();

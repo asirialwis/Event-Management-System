@@ -38,9 +38,34 @@ namespace Event_Management_System_Backend.Services
 
 
 
+        // public async Task<EventDetailDto> GetEventByIdAsync(int id)
+        // {
+        //     var eventItem = await _context.Events.FindAsync(id);
+
+        //     if (eventItem == null)
+        //     {
+        //         return null;
+        //     }
+
+        //     return new EventDetailDto
+        //     {
+        //         Id = eventItem.Id,
+        //         Name = eventItem.Name,
+        //         Description = eventItem.Description,
+        //         Date = eventItem.Date,
+        //         Location = eventItem.Location,
+        //         CreatedBy = eventItem.CreatedBy,
+        //         Capacity = eventItem.Capacity,
+        //         RemainingCapacity = eventItem.RemainingCapacity,
+        //         Tags = eventItem.Tags
+        //     };
+
+        // }
         public async Task<EventDetailDto> GetEventByIdAsync(int id)
         {
-            var eventItem = await _context.Events.FindAsync(id);
+            var eventItem = await _context.Events
+                .Include(e => e.Attendees) // Eagerly load Attendees
+                .FirstOrDefaultAsync(e => e.Id == id);
 
             if (eventItem == null)
             {
@@ -57,10 +82,16 @@ namespace Event_Management_System_Backend.Services
                 CreatedBy = eventItem.CreatedBy,
                 Capacity = eventItem.Capacity,
                 RemainingCapacity = eventItem.RemainingCapacity,
-                Tags = eventItem.Tags
+                Tags = eventItem.Tags,
+                Attendees = eventItem.Attendees.Select(a => new AttendeeDto
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Email = a.Email
+                }).ToList() // Map attendee details
             };
-
         }
+
 
 
         public async Task<IEnumerable<EventDetailDto>> GetAllEventsAsync()
@@ -74,13 +105,14 @@ namespace Event_Management_System_Backend.Services
                                      Description = e.Description,
                                      Date = e.Date,
                                      Location = e.Location,
-                                     CreatedBy = e.CreatedBy, 
-                                     Capacity = e.Capacity,  
-                                     RemainingCapacity = e.RemainingCapacity, 
-                                     Tags = e.Tags ,
+                                     CreatedBy = e.CreatedBy,
+                                     Capacity = e.Capacity,
+                                     RemainingCapacity = e.RemainingCapacity,
+                                     Tags = e.Tags,
 
-                                     Attendees = e.Attendees.Select(a=>new AttendeeDto
-                                     {   Id = a.Id,
+                                     Attendees = e.Attendees.Select(a => new AttendeeDto
+                                     {
+                                         Id = a.Id,
                                          Name = a.Name,
                                          Email = a.Email,
                                      }).ToList()
@@ -89,7 +121,7 @@ namespace Event_Management_System_Backend.Services
         }
 
 
-       
+
 
 
         public async Task<String> UpdateEventDetailsAsync(int id, EventUpdateDto eventUpdateDto)

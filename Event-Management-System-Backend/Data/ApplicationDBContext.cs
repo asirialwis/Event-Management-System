@@ -25,7 +25,10 @@
                 .WithMany(a => a.RegisteredEvents)
                 .UsingEntity(j => j.ToTable("EventAttendees")); // Join table
 
-            
+            // Ensure the Email is unique
+            modelBuilder.Entity<Attendee>()
+                .HasIndex(a => a.Email)
+                .IsUnique(); 
         }
         
     }
