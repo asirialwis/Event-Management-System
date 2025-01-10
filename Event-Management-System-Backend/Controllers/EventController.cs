@@ -57,7 +57,7 @@ namespace Event_Management_System_Backend.Controllers
                 var events = await _eventService.GetAllEventsAsync();
                 return Ok(events);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving events");
             }
