@@ -9,7 +9,7 @@ namespace Event_Management_System_Backend.Controllers
     [Route("api/attendee")]
     public class AttendeeController : ControllerBase
     {
-        
+
 
         private readonly IAttendeeService _attendeeService;
 
@@ -19,20 +19,36 @@ namespace Event_Management_System_Backend.Controllers
             _attendeeService = attendeeService;
         }
 
-
-        // Add an attendee for specific evend
         [HttpPost("add-attendee/{eventId}")]
         public async Task<IActionResult> AddAttendee(int eventId, [FromBody] AddAttendeeDto addAttendeeDto)
         {
-            if (addAttendeeDto == null)
-                return BadRequest("Attendee data is required.");
+            if (string.IsNullOrWhiteSpace(addAttendeeDto.Name))
+            {
+                return BadRequest(new { message = "Attendee name is required." });
+            }
 
-            var result = await _attendeeService.AddAttendeeAsync(eventId, addAttendeeDto);
+            if (string.IsNullOrWhiteSpace(addAttendeeDto.Email))
+            {
+                return BadRequest(new { message = "Attendee email is required." });
+            }
 
-
-
-            return Ok("Attendee added successfully.");
+            try
+            {
+                var result = await _attendeeService.AddAttendeeAsync(eventId, addAttendeeDto);
+                return Ok(new { message = "Attendee added successfully." });
+            }
+            catch (ArgumentException ex)
+            {
+                // Handle specific known exceptions
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception)
+            {
+                
+                return StatusCode(500, new { message = "An unexpected error occurred. Please try again later." });
+            }
         }
+
 
         //update assigned attendee data
         [HttpPut("{eventId}/update/{attendeeId}")]

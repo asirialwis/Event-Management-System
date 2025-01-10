@@ -6,7 +6,6 @@ import viteLogo from '/vite.svg'
 import Navbar from './components/Navbar'
 import EventCreate from './components/EventCreate'
 import EventDetail from './components/EventDetail'
-import EventList from './components/EventList'
 import EventUpdate from './components/EventUpdate'
 import Footer from './components/Footer'
 
@@ -18,7 +17,7 @@ function App() {
   return (
     <BrowserRouter>
     <Routes>
-      <Route path="/events" element={<EventList/>}/>
+      <Route path="/events" element={<EventDetail/>}/>
       <Route path="/event-detail" element={<EventDetail/>}/>
       <Route path="/event-create" element={<EventCreate/>}/>
       <Route path="/event-update" element={<EventUpdate/>}/>

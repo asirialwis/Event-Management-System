@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { FaTimes } from "react-icons/fa"; // Import the close icon from react-icons
+import { FaTimes } from "react-icons/fa"; 
 import "./EventDetail.css";
 
 const EventDetail = () => {
@@ -8,7 +8,8 @@ const EventDetail = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [attendeeName, setAttendeeName] = useState("");
   const [attendeeEmail, setAttendeeEmail] = useState("");
-  const [modalOpen, setModalOpen] = useState(false); // State to control modal visibility
+  const [modalOpen, setModalOpen] = useState(false);
+  const [errors, setErrors] = useState({ name: "", email: "", server: "" });
 
   useEffect(() => {     
     const fetchEvents = async () => {
@@ -27,11 +28,27 @@ const EventDetail = () => {
 
   const handleEventClick = (event) => {
     setSelectedEvent(event);
-    setModalOpen(true); // Open the modal on event click
+    setModalOpen(true);
   };
 
   const handleAddAttendee = async () => {
-    if (!selectedEvent) return;
+    let valid = true;
+    const newErrors = { name: "", email: "", server: "" };
+
+    if (!attendeeName) {
+      newErrors.name = "Name is required.";
+      valid = false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!attendeeEmail || !emailRegex.test(attendeeEmail)) {
+      newErrors.email = "Please enter a valid email.";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+
+    if (!valid) return;
 
     const newAttendee = {
       name: attendeeName,
@@ -44,14 +61,20 @@ const EventDetail = () => {
         newAttendee
       );
       alert("Attendee added successfully!");
+      setErrors({ name: "", email: "", server: "" });
     } catch (error) {
       console.error("Error adding attendee:", error);
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        server: error.response?.data?.message || "An unexpected error occurred.",
+      }));
     }
   };
 
   const handleCloseModal = () => {
     setModalOpen(false);
     setSelectedEvent(null);
+    setErrors({ name: "", email: "", server: "" });
   };
 
   return (
@@ -66,7 +89,6 @@ const EventDetail = () => {
         ))}
       </ul>
 
-      {/* Modal for event details */}
       {modalOpen && selectedEvent && (
         <div className="modal">
           <div className="modal-content">
@@ -94,16 +116,29 @@ const EventDetail = () => {
                 type="text"
                 placeholder="Name"
                 value={attendeeName}
-                onChange={(e) => setAttendeeName(e.target.value)}
+                onChange={(e) => {
+                  setAttendeeName(e.target.value);
+                  if (e.target.value) setErrors((prev) => ({ ...prev, name: "" }));
+                }}
               />
+              {errors.name && <p className="error-message">{errors.name}</p>}
+              
               <input
                 type="email"
                 placeholder="Email"
                 value={attendeeEmail}
-                onChange={(e) => setAttendeeEmail(e.target.value)}
+                onChange={(e) => {
+                  setAttendeeEmail(e.target.value);
+                  if (e.target.value && emailRegex.test(e.target.value)) {
+                    setErrors((prev) => ({ ...prev, email: "" }));
+                  }
+                }}
               />
+              {errors.email && <p className="error-message">{errors.email}</p>}
             </div>
+
             <button onClick={handleAddAttendee}>Add Attendee</button>
+            {errors.server && <p className="error-message">{errors.server}</p>}
           </div>
         </div>
       )}
