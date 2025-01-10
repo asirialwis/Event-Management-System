@@ -79,7 +79,7 @@ Ensure you have the following installed on your system:
 - 📅 **Event Creation**: Create and manage events seamlessly.
 - 🕑 **Real-Time Updates**: Update or change event related data.
 - 💻 **Event Management**: Manage attendees, organizers, and dates update efficiently.
-- 🔍 **Search & Filter**: Easily search and filter events.
+- 🔍 **Normalized Database**: Fast and Enhance Performance.
 - 📈 **Responsive and Reusable**: Responsive CSS and reusable react components.
 
 ## Technologies Used 🔧
