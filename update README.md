@@ -87,7 +87,24 @@ Ensure you have the following installed on your system:
 - **Backend**: .NET Core, Entity Framework Core, MSSQL
 - **Frontend**: React, CSS, React-Icons
 
+## Demo Video
+👇 **Click below to watch the demo video.**
 
+<a href="https://cloud.appwrite.io/v1/storage/buckets/6748a0a2001b4a852b49/files/67814079003322f906d8/view?project=6748a02f0016a1765aa6&project=6748a02f0016a1765aa6&mode=admin" target="_blank">
+  <img src="https://cloud.appwrite.io/v1/storage/buckets/6748a0a2001b4a852b49/files/67814f6000361590ef31/view?project=6748a02f0016a1765aa6&project=6748a02f0016a1765aa6&mode=admin" width="500" />
+</a>
+
+## Screenshots
+### Event List
+![Event List](https://cloud.appwrite.io/v1/storage/buckets/6748a0a2001b4a852b49/files/678146a80026a994800c/view?project=6748a02f0016a1765aa6&project=6748a02f0016a1765aa6&mode=admin)
+### Event Detail Modal
+![Event Detail Modal](https://cloud.appwrite.io/v1/storage/buckets/6748a0a2001b4a852b49/files/6781469d000812eb493c/view?project=6748a02f0016a1765aa6&project=6748a02f0016a1765aa6&mode=admin)
+### Update Event
+![Update Event](https://cloud.appwrite.io/v1/storage/buckets/6748a0a2001b4a852b49/files/678146c2002c14e09881/view?project=6748a02f0016a1765aa6&project=6748a02f0016a1765aa6&mode=admin)
+### Add Attendee
+![Add Attendee](https://cloud.appwrite.io/v1/storage/buckets/6748a0a2001b4a852b49/files/67814692000326eba886/view?project=6748a02f0016a1765aa6&project=6748a02f0016a1765aa6&mode=admin)
+### Update Attendee
+![Update Attendee](https://cloud.appwrite.io/v1/storage/buckets/6748a0a2001b4a852b49/files/678146ba001eadbfd4b6/view?project=6748a02f0016a1765aa6&project=6748a02f0016a1765aa6&mode=admin)
 
 ## Contact 📧
 
