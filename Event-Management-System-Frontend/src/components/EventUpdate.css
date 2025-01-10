@@ -1,0 +1,118 @@
+.event-update {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    font-family: 'Montserrat', 'Quicksand', 'Raleway', sans-serif;
+  }
+  
+  .heading {
+    text-align: center;
+    color: #28a745; 
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .event-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .event-list li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+  
+  .event-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .attendee-list {
+    list-style-type: none;
+    padding-left: 20px;
+    margin: 10px 0 0;
+  }
+  input[type="text"], input[type="date"], input[type="time"], input[type="number"], select, textarea {
+    width: 100%;
+    padding: 5px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .update-btn {
+    background-color: #ffc107;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-right: 10px;
+    margin-top: 10px;
+  }
+  
+  .update-btn:hover {
+    background-color: #e0a800;
+  }
+  
+  .delete-btn {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c82333;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .modal-heading {
+    text-align: center;
+    color: #28a745; 
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
