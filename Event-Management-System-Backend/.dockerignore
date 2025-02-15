@@ -1,0 +1,25 @@
+# Ignore the bin and obj directories which contain build artifacts
+/bin
+/obj
+
+# Ignore configuration files for IDEs (e.g., Visual Studio, Rider)
+.vs
+.idea
+.vscode
+
+# Ignore temporary files created by operating systems
+Thumbs.db
+.DS_Store
+
+# Ignore git files (optional, but often recommended)
+.git
+
+# Ignore Docker-related files (e.g., Docker cache)
+.dockerignore
+
+# Ignore secret files
+secrets.env
+
+# Ignore other directories or files you don't want in the image
+node_modules
+npm-debug.log
