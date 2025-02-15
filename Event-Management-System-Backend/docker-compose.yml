@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # .NET Web API Service
+  event_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    expose:
+      - "5000"
+    depends_on:
+      - sql_server
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sql_server;Database=EventDB;User=sa;Password=yourStrong!Passw0rd;
+    networks:
+      - event_network
+
+  # SQL Server Service
+  sql_server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sql_server
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=yourStrong!Passw0rd
+    ports:
+      - "1433:1433"
+    networks:
+      - event_network
+    volumes:
+      - sql_data:/var/opt/mssql
+
+  # NGINX Service
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - event_api
+    networks:
+      - event_network
+
+networks:
+  event_network:
+    driver: bridge
+
+volumes:
+  sql_data:
